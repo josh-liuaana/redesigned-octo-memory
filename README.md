@@ -1,6 +1,6 @@
 ## Getting Started
 
-Visit the live site here: [redesigned-octo-memory](Athena)
+Visit the live site here: [https://redesigned-octo-memory.vercel.app](Athena)
 
 Or run the development server:
 
