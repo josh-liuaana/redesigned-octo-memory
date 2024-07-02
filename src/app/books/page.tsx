@@ -25,9 +25,11 @@ function Page() {
       {bookList &&
         bookList.map((book, i) => (
           <div key={i}>
-            <h1>
-              {book.name} - {book.author}
-            </h1>
+            <a href={`/books/${book.id}`}>
+              <h1>
+                {book.name} - {book.author}
+              </h1>
+            </a>
           </div>
         ))}
     </main>
