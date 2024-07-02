@@ -1,18 +1,16 @@
 'use client'
-import { fetchBooks } from '@/apis/books'
-import { useState, useEffect } from 'react'
-import type { Book } from '@/models/types'
+import { fetchThunkBooks } from '@/redux/features/bookSlice'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 
 function Page() {
-  const [bookList, setBookList] = useState<Book[]>([])
+  const books = useAppSelector((state) => state.books)
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    const getBooks = async () => {
-      const books = await fetchBooks()
-      setBookList(books)
-    }
-    getBooks()
-  }, [])
+    dispatch(fetchThunkBooks())
+  }, [dispatch])
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24 gap-4">
@@ -22,8 +20,8 @@ function Page() {
         </button>
       </a>
       <h1 className="text-3xl">Library</h1>
-      {bookList &&
-        bookList.map((book, i) => (
+      {books &&
+        books.map((book, i) => (
           <div key={i}>
             <a href={`/books/${book.id}`}>
               <h1>

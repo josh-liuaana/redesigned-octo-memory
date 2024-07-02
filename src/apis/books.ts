@@ -4,17 +4,22 @@ import { db } from '../../firebase.config'
 import type { Book } from '@/models/types'
 
 export async function fetchBooks(): Promise<Book[]> {
-  const querySnapshot = await getDocs(collection(db, 'books'))
+  try {
+    const querySnapshot = await getDocs(collection(db, 'books'))
 
-  const bookList = [] as Book[]
+    const bookList = [] as Book[]
 
-  querySnapshot.forEach((doc) => {
-    bookList.push({
-      id: doc.id,
-      name: doc.data().name,
-      author: doc.data().author,
+    querySnapshot.forEach((doc) => {
+      bookList.push({
+        id: doc.id,
+        name: doc.data().name,
+        author: doc.data().author,
+      })
     })
-  })
 
-  return bookList
+    return bookList
+  } catch (err: any) {
+    console.error('An error has occurred in the fetchBooks function call')
+    throw new Error(err.message)
+  }
 }
