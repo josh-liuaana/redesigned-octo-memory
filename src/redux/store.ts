@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import bookSlice from './features/bookSlice'
+import currentBookSlice from './features/currentBookSlice'
 
 export const store = configureStore({
   reducer: {
     books: bookSlice,
+    currentBook: currentBookSlice,
   },
 })
 
