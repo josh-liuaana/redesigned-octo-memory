@@ -1,0 +1,71 @@
+{
+  "books": 
+    [
+      {
+        "id": "567ujhbgt6uijhgy67uij",
+        "name": "Rebecca Yarros",
+        "author": "Fourth Wing",
+        "series": "The Empyrean",
+        "pages": 517
+      },
+      {
+        "id": "vghjkjnb67892o3nq",
+        "name": "Rebecca Yarros",
+        "author": "Iron Flame",
+        "series": "The Empyrean",
+        "pages": 640
+      }
+    ],
+  "characters": 
+    [
+      {
+        "name": "Violet Sorrengail",
+        "books": [
+          "567ujhbgt6uijhgy67uij",
+          "vghjkjnb67892o3nq"
+        ],
+        "id": "2g89ch29ch29gc",
+        "pageInfo": [
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 1,
+            "information": "some information of whats happened up until page 1"
+          },
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 124,
+            "information": "some information of whats happened up until page 124"
+          },
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 371,
+            "information": "information of whats happened up until page 371"
+          }
+        ]
+      }, {
+        "name": "Xaden Riorson",
+        "books": [
+          "567ujhbgt6uijhgy67uij",
+          "vghjkjnb67892o3nq"
+        ],
+        "id": "ib67q347hi3chhcq",
+        "pageInfo": [
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 50,
+            "information": "information of whats happened up until page 50"
+          },
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 263,
+            "information": "some information of whats happened up until page 263"
+          },
+          {
+            "book": "567ujhbgt6uijhgy67uij",
+            "page": 413,
+            "information": "some information of whats happened up until page 413"
+          }
+        ]
+      }
+    ]
+}
