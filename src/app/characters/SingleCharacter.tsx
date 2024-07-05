@@ -1,18 +1,18 @@
 'use client'
 
-import data from '../../../data.json'
-
 import { useEffect, useState } from 'react'
 import type { Character, Details } from '@/models/types'
+import { useAppSelector } from '@/redux/store'
 
 function SingleCharacter({ id, currentPage }: any) {
   const [char, setChar] = useState({} as Character)
   const [updatedCharInfo, setUpdatedCharInfo] = useState<Details[]>([])
+  const characters = useAppSelector((state) => state.characters)
 
   useEffect(() => {
-    const character = data.characters.filter((char) => char.id === id)
+    const character = characters.filter((char) => char.id === id)
     setChar(character[0])
-  }, [id])
+  }, [characters, id])
 
   const spoilerFreeInformation = () => {
     const restrictedCharacterInfo = char.pageInfo.filter(

@@ -1,8 +1,5 @@
 'use client'
 
-// !
-import data from '../../../../data.json'
-
 import { useDebouncedCallback } from 'use-debounce'
 import type { Character } from '@/models/types'
 
@@ -11,10 +8,12 @@ import { fetchThunkSingleBook } from '@/redux/features/currentBookSlice'
 import { useAppSelector, AppDispatch } from '@/redux/store'
 import { useDispatch } from 'react-redux'
 import SingleCharacter from '@/app/characters/SingleCharacter'
+import { fetchThunkCharacters } from '@/redux/features/characterSlice'
 
 function Book({ params }: { params: { id: string } }) {
   const id = params.id
   const book = useAppSelector((state) => state.currentBook)
+  const characters = useAppSelector((state) => state.characters)
   const dispatch = useDispatch<AppDispatch>()
   const [currentPage, setCurrentPage] = useState(0)
   const [currentCharacters, setCurrentCharacters] = useState([] as Character[])
@@ -24,6 +23,7 @@ function Book({ params }: { params: { id: string } }) {
   useEffect(() => {
     console.log('useEffect triggered')
     dispatch(fetchThunkSingleBook(id))
+    dispatch(fetchThunkCharacters())
   }, [dispatch, id])
 
   const updateCurrentPage = (page: number) => {
@@ -34,7 +34,7 @@ function Book({ params }: { params: { id: string } }) {
   const getCurrentCharacterInfo = useDebouncedCallback(() => {
     console.log('fetching new information up to page:', currentPage)
     const mentionedCharacters = [] as any
-    data.characters.forEach((character) => {
+    characters.forEach((character) => {
       if (character.pageInfo[0].page <= currentPage) {
         mentionedCharacters.push(character)
       }
