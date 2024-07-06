@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { TbHomeFilled } from 'react-icons/tb'
 import BookTile from './BookTile'
+import Link from 'next/link'
 
 function Page() {
   const books = useAppSelector((state) => state.books)
   const dispatch = useDispatch<AppDispatch>()
-
   useEffect(() => {
     dispatch(fetchThunkBooks())
   }, [dispatch])
@@ -21,11 +21,11 @@ function Page() {
           Library
         </h1>
       </div>
-      <a href="/">
+      <Link href={'/'}>
         <button className="text-4xl">
           <TbHomeFilled />
         </button>
-      </a>
+      </Link>
       <section className="grid-cols-2">
         {books && books.map((book) => <BookTile key={book.id} book={book} />)}
       </section>

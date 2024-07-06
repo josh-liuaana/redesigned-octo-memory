@@ -1,14 +1,47 @@
+'use client'
+
 import Image from 'next/image'
+import { auth } from '../../firebase.config'
+import {
+  signInWithPopup,
+  signOut,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  User,
+} from 'firebase/auth'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function Home() {
+  const [user, setUser] = useState<User | null>(null)
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user)
+    })
+  }, [])
+
+  const signInWithGoogle = async () => {
+    const provider = await new GoogleAuthProvider()
+
+    const result = await signInWithPopup(auth, provider)
+    const user = result.user
+    setUser(user)
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Athena - your one stop lore shop
-        </h1>
+        {user ? (
+          <h1 className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+            <Link href="/user">{user.displayName}</Link>
+          </h1>
+        ) : (
+          <h1 className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+            Athena - your one stop lore shop
+          </h1>
+        )}
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
+          <Link
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
             href="https://www.jliuaana.com/"
             target="_blank"
@@ -22,7 +55,7 @@ export default function Home() {
               height={24}
               priority
             />
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -38,7 +71,7 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:gap-48 gap-8">
-        <a
+        <Link
           href="/books"
           className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
         >
@@ -49,22 +82,35 @@ export default function Home() {
             </span>
           </h2>
           <p className="m-0 text-sm opacity-50">Browse the library</p>
-        </a>
+        </Link>
 
-        <a
-          href="/characters"
-          className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Characters
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 text-sm opacity-50">
-            Dive into the tomes of characters safe from spoilers
-          </p>
-        </a>
+        {user ? (
+          <button
+            onClick={() => signOut(auth)}
+            className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          >
+            <h2 className="mb-3 text-2xl font-semibold">
+              Sign Out
+              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                -&gt;
+              </span>
+            </h2>
+            <p className="m-0 text-sm opacity-50">See ya</p>
+          </button>
+        ) : (
+          <button
+            onClick={() => signInWithGoogle()}
+            className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          >
+            <h2 className="mb-3 text-2xl font-semibold">
+              Sign in
+              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                -&gt;
+              </span>
+            </h2>
+            <p className="m-0 text-sm opacity-50">To add information</p>
+          </button>
+        )}
       </div>
     </main>
   )

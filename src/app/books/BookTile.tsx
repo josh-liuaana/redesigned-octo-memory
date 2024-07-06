@@ -1,4 +1,5 @@
 import { Book } from '@/models/types'
+import Link from 'next/link'
 
 interface Props {
   book: Book
@@ -7,10 +8,10 @@ interface Props {
 function BookTile(props: Props) {
   return (
     <div>
-      <a href={`/books/${props.book.id}`}>
+      <Link href={`/books/${props.book.id}`}>
         <h1>{props.book.name}</h1>
         <i>{props.book.author}</i>
-      </a>
+      </Link>
     </div>
   )
 }
