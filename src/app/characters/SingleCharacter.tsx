@@ -4,7 +4,13 @@ import { useEffect, useState } from 'react'
 import type { Character, Details } from '@/models/types'
 import { useAppSelector } from '@/redux/store'
 
-function SingleCharacter({ id, currentPage }: any) {
+interface Props {
+  id: string
+  currentPage: number
+  bookId: string
+}
+
+function SingleCharacter({ id, currentPage, bookId }: Props) {
   const [char, setChar] = useState({} as Character)
   const [updatedCharInfo, setUpdatedCharInfo] = useState<Details[]>([])
   const characters = useAppSelector((state) => state.characters)
@@ -16,9 +22,9 @@ function SingleCharacter({ id, currentPage }: any) {
 
   const spoilerFreeInformation = () => {
     const restrictedCharacterInfo = char.pageInfo.filter(
-      (information) => information.page <= currentPage
+      (information) =>
+        information.page <= currentPage && information.book === bookId
     )
-    console.log('char info:', restrictedCharacterInfo)
     setUpdatedCharInfo(restrictedCharacterInfo)
   }
 

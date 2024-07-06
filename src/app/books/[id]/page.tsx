@@ -21,9 +21,8 @@ function Book({ params }: { params: { id: string } }) {
   const [selectedCharacter, setSelectedCharacter] = useState('')
 
   useEffect(() => {
-    console.log('useEffect triggered')
     dispatch(fetchThunkSingleBook(id))
-    dispatch(fetchThunkCharacters())
+    dispatch(fetchThunkCharacters(id))
   }, [dispatch, id])
 
   const updateCurrentPage = (page: number) => {
@@ -32,7 +31,6 @@ function Book({ params }: { params: { id: string } }) {
   }
 
   const getCurrentCharacterInfo = useDebouncedCallback(() => {
-    console.log('fetching new information up to page:', currentPage)
     const mentionedCharacters = [] as any
     characters.forEach((character) => {
       if (character.pageInfo[0].page <= currentPage) {
@@ -78,7 +76,11 @@ function Book({ params }: { params: { id: string } }) {
           <button onClick={() => setShowIndiv(false)}>
             Back to Character List
           </button>
-          <SingleCharacter id={selectedCharacter} currentPage={currentPage} />
+          <SingleCharacter
+            id={selectedCharacter}
+            currentPage={currentPage}
+            bookId={id}
+          />
         </div>
       ) : (
         <>

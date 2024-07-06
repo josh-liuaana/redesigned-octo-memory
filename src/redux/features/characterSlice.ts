@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchCharacters } from '@/apis/characters'
+import { fetchCharactersByBookId } from '@/apis/characters'
 import { Character } from '@/models/types'
 
 const initialState = [] as Character[] // type this correctly
@@ -14,8 +14,8 @@ export const characterSlice = createSlice({
   },
 })
 
-export const fetchThunkCharacters = () => async (dispatch: any) => {
-  const res = await fetchCharacters()
+export const fetchThunkCharacters = (id: string) => async (dispatch: any) => {
+  const res = await fetchCharactersByBookId(id) // ! gets specific book chars
   dispatch(setCharacters(res))
 }
 
