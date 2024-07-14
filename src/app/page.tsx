@@ -11,6 +11,8 @@ import {
 } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { IoInformation } from 'react-icons/io5'
+import { FiLogOut, FiLogIn } from 'react-icons/fi'
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
@@ -29,88 +31,81 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        {user ? (
-          <h1 className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+    <main className="relative h-screen flex items-center justify-center bg-gray-300">
+      {/* Background img div */}
+      <div className="bg-gradient-image absolute bottom-0 w-full h-1/2 bg-cover bg-center"></div>
+
+      {/* Home container */}
+      <div className="z-10 flex h-screen w-screen flex-col items-center">
+        {/* Info bar */}
+        <div className="info-bar flex items-center justify-between pl-4 pr-4 text-xl border-b border-black font-mono fixed left-0 top-0 w-full bg-gradient-to-b from-slate-300 pb-6 pt-6 backdrop-blur-2xl ">
+          {user ? (
             <Link href="/user">{user.displayName}</Link>
-          </h1>
-        ) : (
-          <h1 className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            Athena - your one stop lore shop
-          </h1>
-        )}
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+          ) : (
+            <h1>Athena</h1>
+          )}
+          {user ? (
+            <button onClick={() => signOut(auth)}>
+              <FiLogOut className="text-3xl" />
+            </button>
+          ) : (
+            <button onClick={() => signInWithGoogle()}>
+              <FiLogIn className="text-3xl" />
+            </button>
+          )}
+        </div>
+
+        {/* Home screen contents */}
+        <div className="home-screen-contents flex flex-col items-center justify-around">
+          {/* Athena App logo */}
+          <div className="athena-app-logo flex justify-center items-center w-screen ">
+            <Image
+              // className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+              src="/logo-no-background.png"
+              alt="Athena Logo"
+              width={250}
+              height={37}
+              priority
+            />
+          </div>
+
+          {/* Button container */}
+          <div className="home-button-container flex gap-4 w-4/5">
+            <Link
+              href="/information"
+              className="home-button shadow shadow-gray-300 border-white border border-solid rounded font-semibold h-full bg-white w-1/5 flex justify-center items-center"
+            >
+              <IoInformation className="text-xl text-white" />
+            </Link>
+            <Link
+              href="/books"
+              className="home-button shadow shadow-gray-300 rounded w-4/5 border-white border border-solid"
+            >
+              <h2 className="text-white text-xl w-full h-full font-mono flex justify-center items-center">
+                Books
+              </h2>
+            </Link>
+          </div>
+        </div>
+
+        {/* JL logo */}
+        <div className="logo-footer-bar fixed bottom-0 left-0 flex w-full items-end justify-center">
           <Link
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
+            className="flex place-items-center gap-2"
             href="https://www.jliuaana.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
-              src="/jl-high-resolution-logo-transparent.png"
+              src="/jl-high-resolution-logo-white-transparent.png"
               alt="jl logo"
-              className="dark:invert"
-              width={65}
+              // className="dark:invert"
+              width={60}
               height={24}
               priority
             />
           </Link>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/logo-no-background.png"
-          alt="Athena Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:gap-48 gap-8">
-        <Link
-          href="/books"
-          className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Books
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 text-sm opacity-50">Browse the library</p>
-        </Link>
-
-        {user ? (
-          <button
-            onClick={() => signOut(auth)}
-            className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <h2 className="mb-3 text-2xl font-semibold">
-              Sign Out
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className="m-0 text-sm opacity-50">See ya</p>
-          </button>
-        ) : (
-          <button
-            onClick={() => signInWithGoogle()}
-            className=" lg:text-center bg-gray-200 border-gray-400 group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-500 hover:bg-gray-300 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
-            <h2 className="mb-3 text-2xl font-semibold">
-              Sign in
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className="m-0 text-sm opacity-50">To add information</p>
-          </button>
-        )}
       </div>
     </main>
   )

@@ -2,32 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.bg-gradient-image {
+  background-image: linear-gradient(rgb(209 213 219), rgba(0, 0, 0, 0)), url('/book.jpeg');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.info-bar {
+  height: 10dvh
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.logo-footer-bar {
+  height: 10dvh
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.home-screen-contents {
+  height: 80dvh;
+  margin-top: 10dvh;
 }
+
+.home-button {
+  background: linear-gradient(to bottom, rgb(209 213 219) 0%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+/* .athena-app-logo {
+  margin-top: 10dvh;
+  height: 40dvh
+} */
+
+.home-button-container {
+  height: 7dvh
+}
+
